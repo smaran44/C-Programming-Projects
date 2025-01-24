@@ -6,7 +6,7 @@ int main() {
 
     int choice;
     double num1, num2, result; 
-    // double is used to store floating point numbers with double precision.
+    // double is a data type that can store decimal numbers with precision.
     
 
     do {
