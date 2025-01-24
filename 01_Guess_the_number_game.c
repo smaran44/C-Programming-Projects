@@ -1,5 +1,5 @@
-// NUMBER GUESSING GAME
-// This program is a simple number guessing game where the player attempts to guess a randomly generated number between 1 and 100.
+// GUESS THE NUMBER
+// This program is a simple guess the number where the player attempts to guess a randomly generated number between 1 and 100.
 // The game provides feedback on whether the player's guess is too high, too low, or correct.
 // The player can continue guessing until they find the correct number, and the program keeps track of the number of attempts.
 // The game ends with a congratulatory message and displays the total number of guesses taken.
@@ -17,7 +17,7 @@ int no_of_guesses = 0;
 srand(time(0)); //this will generate random number
 generated = rand() % 101; //this will generate random number between 1 to 100
 
-printf("Welcome to the game of guessing numbers\n");
+printf("Welcome to Guess the Number\n");
 
 //here we use do while loop 
 //For Loop	When you know the exact number of iterations beforehand.	Before each iteration.
