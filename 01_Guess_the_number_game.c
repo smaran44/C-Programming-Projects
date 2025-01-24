@@ -15,7 +15,9 @@ int generated,guess;
 int no_of_guesses = 0;
 
 srand(time(0)); //this will generate random number
-generated = rand() % 101; //this will generate random number between 1 to 100
+
+//The line generated = rand() % 101; generates a number between 0 and 100, inclusive. However, your prompt suggests the range should be between 1 and 100. To fix this:
+generated = (rand() % 100) + 1; //this will generate random number between 1 to 100
 
 printf("Welcome to Guess the Number\n");
 
@@ -31,9 +33,9 @@ do {
 
 
     if  (guess < generated) {
-        printf("You guessed smaller number.\n");
+        printf("Your guess is too low.\n");
     } else if (guess > generated) {
-        printf("You guessed larger number.\n");
+        printf("Your guess is too high.\n");
     } else {
         printf("Congratulations you guessed the right number in %d attempts.\n", no_of_guesses);
     }
