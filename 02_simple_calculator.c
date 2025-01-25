@@ -33,6 +33,11 @@ int main() {
     printf("\nEnter your choice : ");
     scanf("%d", &choice);
 
+    if (choice < 1 || choice > 7) { // Check if the choice is valid
+    printf("Invalid choice! Please select a number between 1 and 7.\n");
+    continue; // Skip the rest of the loop and show the menu again
+    }
+
     if (choice == 7) {
         printf("Thank you for using the calculator\n");
         break;
@@ -91,9 +96,13 @@ int main() {
         default:
             printf("Invalid choice\n");
 
+            //here we use default because if the user enters the choice other than 1 to 7 then it will print invalid choice
+            //but it will print it after entering the two numbers
+            // so we have to done it before entering the numbers
+            // so we done if and continue after entering choice
+
     }
     
-        
     }
 
     return 0;
