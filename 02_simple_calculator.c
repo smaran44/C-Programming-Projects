@@ -3,7 +3,7 @@
 //math.h is a header file in the standard library of the C programming language designed for basic mathematical operations.
 
 void print_menu() {
-    printf("Welcome to Simple Calculator\n");
+    printf("\nWelcome to Simple Calculator\n");
     printf("\nChoose one of the following options : \n");
     printf("1. Addition\n");
     printf("2. Subtraction\n");
