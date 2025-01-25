@@ -14,6 +14,11 @@ void print_menu() {
     printf("7. Exit\n");
 }
 
+void clear_input_buffer() {
+    int c;
+    while ((c = getchar()) != '\n' && c != EOF); // Clear the input buffer
+}
+
 int main() {
     
 
@@ -30,9 +35,14 @@ int main() {
 
     print_menu();
     
-    printf("\nEnter your choice : ");
-    scanf("%d", &choice);
+    printf("\nEnter your choice: ");
+        if (scanf("%d", &choice) != 1) { // Check if input is an integer
+            printf("Invalid input! Please enter an integer between 1 and 7.\n");
+            clear_input_buffer(); // Clear invalid input
+            continue; // Restart the loop
+        }
 
+        
     if (choice < 1 || choice > 7) { // Check if the choice is valid
     printf("Invalid choice! Please select a number between 1 and 7.\n");
     continue; // Skip the rest of the loop and show the menu again
