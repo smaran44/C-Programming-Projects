@@ -33,7 +33,7 @@ int main() {
     printf("\nEnter your choice : ");
     scanf("%d", &choice);
 
-    if (choice != 1 && choice != 2 && choice != 3 && choice != 4 && choice != 5 && choice != 6 && choice != 7) { // Check if the choice is valid
+    if (choice < 1 || choice > 7) { // Check if the choice is valid
     printf("Invalid choice! Please select a number between 1 and 7.\n");
     continue; // Skip the rest of the loop and show the menu again
     }
