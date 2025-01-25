@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <math.h> // Required for pow()
+//math.h is a header file in the standard library of the C programming language designed for basic mathematical operations.
 
 void print_menu() {
     printf("Welcome to Simple Calculator\n");
@@ -7,7 +9,7 @@ void print_menu() {
     printf("2. Subtraction\n");
     printf("3. Multiplication\n");
     printf("4. Division\n");
-    printf("5. Modulus\n");
+    printf("5. Modulus\n");//Modulus operator returns the remainder of the division of two numbers.
     printf("6. Power\n");
     printf("7. Exit\n");
 }
@@ -20,11 +22,16 @@ int main() {
     // double is used to store floating point numbers with double precision.
     
 
-    while {
+    while(1) { // (1) is always true, so the loop runs indefinitely until a break statement is encountered
+
+
+    // in guess the game the loop is do while loop because it should not stop upto guess is equal to generated
+    // here we use while loop because we have to run the program until the user wants to exit
+
     print_menu();
     
     printf("\nEnter your choice : ");
-    scanf("%d\n", &choice);
+    scanf("%d", &choice);
 
     if (choice == 7) {
         printf("Thank you for using the calculator\n");
@@ -36,5 +43,58 @@ int main() {
     printf("Please enter the second number : ");
     scanf("%lf", &num2);//lf is used to read double data type.
 
+     switch (choice) {
+    
+        case 1: //Addition
+            result = num1 + num2;
+            printf("The sum of %.2lf and %.2lf is %.2lf\n", num1, num2, result);
+            break;
+        case 2: //Subtraction
+            result = num1 - num2;
+            printf("The difference of %.2lf and %.2lf is %.2lf\n", num1, num2, result);
+            break;
+        case 3: //Multiplication
+            result = num1 * num2;
+            printf("The product of %.2lf and %.2lf is %.2lf\n", num1, num2, result);
+            break;
+        case 4: //Division
+            if (num2 != 0) {
+                result = num1 / num2;
+                printf("The division of %.2lf by %.2lf is %.2lf\n", num1, num2, result);
+            } else {
+                printf("Error: Division by zero is not allowed\n");
+            }
+            break;
+        case 5: //Modulus
+            if (num2 != 0) {
+                result = (int)num1 % (int)num2;
+                printf("The remainder of %d divided by %d is %d\n", (int)num1, (int)num2, (int)result);
+                // modulus operator can only be used with integers
+                // so we have to typecast the numbers to integers
+                // if we enter 15.23 as num1 it will be converted to 15
+                // if we enter 4.56 as num2 it will be converted to 4
+            } else {
+                printf("Error: Modulus by zero is not allowed\n");
+            }
+            break;
+        case 6: //Power
+            result = pow(num1, num2);
+            if (num1 < 0 && num2 != (int)num2) {
+                // Negative base with non-integer exponent is not supported
+               printf("Error: Negative base with non-integer exponent is not supported.\n");
+         } else { 
+              result = pow(num1, num2);
+               printf("%.2lf raised to the power of %.2lf is %.2lf\n", num1, num2, result);
     }
+
+            break;
+        default:
+            printf("Invalid choice\n");
+
+    }
+    
+        
+    }
+
+    return 0;
 }
