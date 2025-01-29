@@ -12,15 +12,15 @@ int main () {
     int choice;
 
     printf("choose the time format : \n"); 
-    printf("1. 24 Hour format\n");
-    printf("2. 12 Hour format\n");
+    printf("1. 12 Hour format\n");
+    printf("2. 24 Hour format\n");
     printf("Make a choice (1 or 2) : ");
     scanf("%d",&choice);
 
     if (choice == 1) {
-        displayTime24Hour();
-    } else if (choice == 2) {
         displayTime12Hour();
+    } else if (choice == 2) {
+        displayTime24Hour();
     } else {
         printf("Invalid choice. Exiting program.\n");
     }
@@ -40,9 +40,9 @@ void displayTime12Hour(){
     time(&raw_time);
     current_time = localtime(&raw_time);
 
-     // Clear the screen before printing the updated time
-     system("cls");
-     //system("clear"); // For Linux/macOS
+    // Clear the screen before printing the updated time
+    system("cls");
+    //system("clear"); // For Linux/macOS
 
     //localtime is a function from library time.h
     // Convert the raw time to local time structure
@@ -70,8 +70,9 @@ void displayTime12Hour(){
     printf("%s\n", buffer);
 
     fflush(stdout);
-
-        sleep(1); // Pause for 1 second
+    //fflush(stdout) is used to manually flush the output buffer, ensuring that any buffered output is printed immediately to the screen.
+    
+    sleep(1); // Pause for 1 second
 
 }
 
@@ -89,12 +90,9 @@ void displayTime24Hour(){
     time(&raw_time);
     current_time = localtime(&raw_time);
 
-     // Clear the screen before printing the updated time
-     system("cls");
-     //system("clear"); // For Linux/macOS
-
-    //localtime is a function from library time.h
-    // Convert the raw time to local time structure
+    // Clear the screen before printing the updated time
+    system("cls");
+    //system("clear"); // For Linux/macOS
 
     // Format time into a human-readable string
     // %A - Full weekday name
@@ -106,7 +104,6 @@ void displayTime24Hour(){
     // %M - Minutes (00-59)
     // %S - seconds (00-59)
     // %p - AM/PM notation
-
   strftime(buffer, sizeof(buffer), "Current Time : %H:%M:%S", current_time);
 
   printf("%s\n", buffer);
