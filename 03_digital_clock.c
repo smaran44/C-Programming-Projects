@@ -28,6 +28,10 @@ int main () {
     // Print the formatted time
     printf("%s\n", buffer);
 
+    strftime(buffer, sizeof(buffer), "Current Time : %H:%M:%S", current_time);
+
+    printf("%s\n", buffer);
+
 
     return 0;
 }
