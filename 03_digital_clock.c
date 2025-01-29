@@ -7,8 +7,22 @@ void displayTime24Hour();
 
 int main () {
 
-    displayTime12Hour();
-    displayTime24Hour();
+    int choice;
+
+    printf("choose the time format : \n"); 
+    printf("1. 24 Hour format\n");
+    printf("2. 12 Hour format\n");
+    printf("Make a choice (1 or 2) : ");
+    scanf("%d",&choice);
+
+    if(choice == 1){
+        displayTime24Hour();
+    }
+
+     if(choice == 2){
+        displayTime12Hour();
+    }
+
 
    return 0;
 }
@@ -36,7 +50,15 @@ void displayTime12Hour(){
     // %p - AM/PM notation
     strftime(buffer, sizeof(buffer), "Current Time : %I:%M:%S %p", current_time);
 
-     printf("%s\n", buffer);
+    printf("%s\n", buffer);
+
+    strftime(buffer, sizeof(buffer), "Date : %B %d %Y", current_time);
+
+    printf("%s\n", buffer);
+
+    strftime(buffer, sizeof(buffer), "Day : %A", current_time);
+
+    printf("%s\n", buffer);
 
 }
 
@@ -66,6 +88,14 @@ void displayTime24Hour(){
   strftime(buffer, sizeof(buffer), "Current Time : %H:%M:%S", current_time);
 
   printf("%s\n", buffer);
+
+   strftime(buffer, sizeof(buffer), "Date : %B %d %Y", current_time);
+
+    printf("%s\n", buffer);
+
+   strftime(buffer, sizeof(buffer), "Day : %A", current_time);
+
+    printf("%s\n", buffer);
 
 }
 
