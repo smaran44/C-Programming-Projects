@@ -1,5 +1,7 @@
 #include<stdio.h>
 #include<time.h>//time.h is a header file in the C standard library for the C programming language that contains time and date function declarations to provide standardized access to time/date manipulation and formatting.
+#include <unistd.h> // For sleep() function
+#include <stdlib.h> // For system()
 
 void displayTime12Hour();
 
@@ -15,19 +17,21 @@ int main () {
     printf("Make a choice (1 or 2) : ");
     scanf("%d",&choice);
 
-    if(choice == 1){
+    if (choice == 1) {
         displayTime24Hour();
-    }
-
-     if(choice == 2){
+    } else if (choice == 2) {
         displayTime12Hour();
+    } else {
+        printf("Invalid choice. Exiting program.\n");
     }
-
 
    return 0;
 }
 
 void displayTime12Hour(){
+
+    while (1) { // Infinite loop to keep the clock running
+
     time_t raw_time;
     struct tm *current_time;
     // Here we used a pointer because the localtime function returns a pointer to a tm structure
@@ -35,6 +39,11 @@ void displayTime12Hour(){
     
     time(&raw_time);
     current_time = localtime(&raw_time);
+
+     // Clear the screen before printing the updated time
+     system("cls");
+     //system("clear"); // For Linux/macOS
+
     //localtime is a function from library time.h
     // Convert the raw time to local time structure
 
@@ -60,9 +69,17 @@ void displayTime12Hour(){
 
     printf("%s\n", buffer);
 
+    fflush(stdout);
+
+        sleep(1); // Pause for 1 second
+
+}
+
 }
 
 void displayTime24Hour(){
+
+    while (1) { // Infinite loop to keep the clock running
 
     time_t raw_time;
     struct tm *current_time;
@@ -71,6 +88,11 @@ void displayTime24Hour(){
     
     time(&raw_time);
     current_time = localtime(&raw_time);
+
+     // Clear the screen before printing the updated time
+     system("cls");
+     //system("clear"); // For Linux/macOS
+
     //localtime is a function from library time.h
     // Convert the raw time to local time structure
 
@@ -96,6 +118,12 @@ void displayTime24Hour(){
    strftime(buffer, sizeof(buffer), "Day : %A", current_time);
 
     printf("%s\n", buffer);
+
+    fflush(stdout);
+
+        sleep(1); // Pause for 1 second
+
+}
 
 }
 
