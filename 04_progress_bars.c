@@ -1,5 +1,7 @@
 #include <stdio.h>
-#include <unistd.h> // For usleep function (delays execution for animation effect)
+#include <unistd.h> // For sleep function 
+#include <stdlib.h> // For system()
+
 
 // Function prototype to print the progress bar
 void print_bar(int task_number, int progress);
@@ -9,25 +11,27 @@ int main() {
     int task_progress[5] = {0, 0, 0, 0, 0};
     
     // Different speeds for each task (percentage increment per loop iteration)
-    int task_speeds[5] = {8,7,6,4,3}; 
+    int task_speeds[5] = {8,7,6,5,4}; 
     
     int completed = 0; // Counter for completed tasks
     
     while (completed < 5) { // Continue looping until all tasks reach 100%
-        printf("\033[H\033[J"); // Clear the console for smooth animation effect
+         system("cls");
         completed = 0; // Reset completed counter in each iteration
         
         for (int i = 0; i < 5; i++) {
             // If task is not yet completed, update its progress
             if (task_progress[i] < 100) {
                 task_progress[i] += task_speeds[i]; // Increment progress by its speed
-                
+            }
                 // Ensure the progress does not exceed 100%
-                if (task_progress[i] > 100) {
+                else if (task_progress[i] > 100) {
                     task_progress[i] = 100;
                 }
-            } else {
+ //If the task's progress (task_progress[i]) exceeds 100%, it is set back to 100. This prevents the task progress from going over 100%.
+             else {
                 completed++; // If task reaches 100%, count it as completed
+ //If the task has reached 100%, the completed counter is incremented to track how many tasks are done.                
             }
             
             // Print the updated progress bar for the task
