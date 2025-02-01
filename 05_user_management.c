@@ -1,33 +1,46 @@
 #include <stdio.h>
 
+typedef struct {
+  // data
+  char username[50];
+  char password[50];
+
+} User;
+
+void register_user();
+void login_user();
+
 int main() {
 
     int option;
 
     while (1) {
 
-    printf("\nWelcome to User Management");
-    printf("\n1. Register");
-    printf("\n2. Login");
-    printf("\n3. Exit");
+    printf("\nWelcome to User Management\n");
+    printf("1. Register\n");
+    printf("2. Login\n");
+    printf("3. Exit\n");
 
-    printf("\nSelect an option : ");
+    printf("Select an option : ");
     scanf("%d" , &option);
 
     switch (option) {
 
         case 1:
+        register_user();
         break;
 
         case 2:
+        login_user();
         break;
 
         case 3:
-        printf("\nExiting Program");
+        printf("Exiting Program\n");
+        return 0; // Exits the program
         break;
 
         default:
-        printf("\nInvalid option. Please try again.");
+        printf("Invalid option. Please try again.\n");
         break;
 
     }
@@ -36,4 +49,12 @@ int main() {
     }
 
     return 0;
+}
+
+void register_user() {
+    printf("hi\n");
+}
+
+void login_user() {
+    printf("hello\n");
 }
