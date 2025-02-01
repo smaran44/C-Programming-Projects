@@ -94,7 +94,7 @@ void create_account(){
     acc.balance = 0;
 
     //Store the Credentials in the File
-   fprintf(file, "%s %d\n", acc.name, acc.acc_no);
+    fprintf(file, "%s %d %.2f\n", acc.name, acc.acc_no, acc.balance);
 
 
    //Close the File and Confirm Registration
@@ -112,17 +112,81 @@ Why "a+" (append mode) won’t work?
 Appending adds data, not modifying existing data
 
 "a+" mode allows reading and appending new data at the end of the file.*/
-    
-  printf("hi");
+
+ FILE *file = fopen("accounts.txt", "r+");
+    if (file == NULL) {
+        printf("Error accessing account data!\n");
+        return;
+    }
+    int acc_no, found = 0;
+    float amount;
+    Account acc;
+
+    FILE *temp = fopen("temp.txt", "w");
+    printf("Enter your account number : ");
+    scanf("%d", &acc_no);
+    printf("Enter amount to deposit: ");
+    scanf("%f", &amount);
+
+    while (fscanf(file, "%s %d %f", acc.name, &acc.acc_no, &acc.balance) != EOF) {
+        if (acc.acc_no == acc_no) {
+            acc.balance += amount;
+            found = 1;
+        }
+        fprintf(temp, "%s %d %.2f\n", acc.name, acc.acc_no, acc.balance);
+    }
+    fclose(file);
+    fclose(temp);
+    remove("accounts.txt");
+    rename("temp.txt", "accounts.txt");
+    if (found)
+        printf("Amount deposited successfully!\n");
+    else
+        printf("Account not found!\n");
+
 }
 
 void withdraw_money(){
-    printf("hi");
+     FILE *file = fopen("accounts.txt", "r+");
+    if (file == NULL) {
+        printf("Error accessing account data!\n");
+        return;
+    }
+    int acc_no, found = 0;
+    float amount;
+    Account acc;
+    FILE *temp = fopen("temp.txt", "w");
+    printf("Enter your account number : ");
+    scanf("%d", &acc_no);
+    printf("Enter amount to withdraw: ");
+    scanf("%f", &amount);
+    while (fscanf(file, "%s %d %f", acc.name, &acc.acc_no, &acc.balance) != EOF) {
+        if (acc.acc_no == acc_no) {
+            if (acc.balance >= amount) {
+                acc.balance -= amount;
+                found = 1;
+            } else {
+                printf("Insufficient balance!\n");
+                found = -1;
+            }
+        }
+        fprintf(temp, "%s %d %.2f\n", acc.name, acc.acc_no, acc.balance);
+    }
+    fclose(file);
+    fclose(temp);
+    if (found > 0) {
+        remove("accounts.txt");
+        rename("temp.txt", "accounts.txt");
+        printf("Amount withdrawn successfully!\n");
+    } else if (found == 0) {
+        printf("Account not found!\n");
+    } 
+
 }
 
 void check_balance(){
 
-     FILE *file = fopen("accounts.txt", "r");
+ FILE *file = fopen("accounts.txt", "r");
      // we use read because just we are reading the balance of the account number
 
      //check if the file opened successfully
