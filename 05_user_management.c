@@ -96,6 +96,11 @@ void register_user() {
     }
  }
 
+
+   //Store the New User's Credentials in the File
+   fprintf(file, "%s %s\n", newuser.username, newuser.password);
+
+
    //Close the File and Confirm Registration
    fclose(file);
    printf("Registration successful!\n");
