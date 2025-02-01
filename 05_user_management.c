@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <conio.h> // For getch() in Windows
 
 typedef struct {
   // data
@@ -9,6 +10,7 @@ typedef struct {
 
 } User;
 
+void masked_password(char *password, int max_length);
 void register_user();
 void login_user();
 
@@ -56,6 +58,39 @@ int main() {
     return 0;
 }
 
+// Function to take password input while masking it with '*'
+void masked_password(char *password, int max_length) {
+    int i = 0;  // Index to track the length of the password
+    char ch;    // Variable to store user input character
+
+    while (1) {
+        ch = getch(); // Get character input without displaying it on the screen
+
+        // If the user presses 'Enter' (ASCII 13), terminate input
+        if (ch == 13) { 
+            password[i] = '\0'; // Null-terminate the password string
+            break; 
+        }
+        // if this is not there when we press enter it will also go into password
+
+        // If the user presses 'Backspace' (ASCII 8), handle deletion
+        else if (ch == 8) { 
+            if (i > 0) {  // Ensure there are characters to delete
+                i--;  
+                printf("\b \b"); // Move cursor back, erase character, move back again
+            }
+        }
+        // if this is not there when we press backspace it will also go into password
+
+        // If the user types a valid character (within max length), store it
+        else if (i < max_length - 1) { 
+            password[i++] = ch;  // Store the character
+            printf("*");  // Print '*' to mask the input
+        }
+    }
+    printf("\n"); // Move to a new line after input completion
+}
+
 void register_user() {
     
     //Declare a user struct and open a file
@@ -79,8 +114,7 @@ void register_user() {
 
     // Get the Password from the User
     printf("Enter password: ");
-    fgets(newuser.password, 50, stdin);
-    newuser.password[strcspn(newuser.password, "\n")] = 0; // Remove newline
+    masked_password(newuser.password); // Masked password input
 
     //Check if the Username Already Exists
     User existinguser;
@@ -130,8 +164,7 @@ void login_user() {
     username[strcspn(username, "\n")] = 0; // Remove newline
 
     printf("Enter password: ");
-    fgets(password, 50, stdin);
-    password[strcspn(password, "\n")] = 0; // Remove newline
+    masked_password(newuser.password); // Masked password input
 
 
    //Search for Matching Credentials
