@@ -26,6 +26,9 @@ int main() {
     printf("Select an option : ");
     scanf("%d" , &option);
 
+    while (getchar() != '\n'); // Flush input buffer
+    //without this Enter Username : Enter password:  these types of errors will come
+    
     switch (option) {
 
         case 1:
@@ -57,7 +60,7 @@ void register_user() {
     
     //Declare a user struct and open a file
     User newuser;
-    File *file = fopen("users.txt", "a+")
+    FILE *file = fopen("users.txt", "a+");
     //"a+" allows appending new users while also enabling reading of existing users.
 
     //check if the file opened successfully
@@ -68,11 +71,11 @@ void register_user() {
 
     //Get the username from the user
     printf("Enter Username : ");
-    fgets("newuser.username, 50, stdin");
+    fgets(newuser.username, 50, stdin);
     //fgets() is used to read a string from the user (up to 50 characters).
     newuser.username[strcspn(newuser.username, "\n")] = 0; // Remove newline
     //strcspn(newUser.username, "\n") finds the index of the newline character (\n) in the string.
-    //newUser.username[strcspn(newUser.username, "\n")] = 0; replaces the newline with \0 (null terminator) to remove unwanted newlines.
+    //newuser.username[strcspn(newuser.username, "\n")] = 0; replaces the newline with \0 (null terminator) to remove unwanted newlines.
 
     // Get the Password from the User
     printf("Enter password: ");
@@ -93,9 +96,6 @@ void register_user() {
     }
  }
 
-   //Store the New User's Credentials in the File
-    fprintf(file, "%s %s\n", newUser.username, newUser.password);
-
    //Close the File and Confirm Registration
    fclose(file);
    printf("Registration successful!\n");
@@ -104,5 +104,50 @@ void register_user() {
 }
 
 void login_user() {
-    printf("hello\n");
+    
+     //Declare variables
+     char username[50], password[50];
+     //username and password arrays are declared to store the user input for login.
+     User storedUser;
+     //storedUser is a User structure to store the username and password read from the file.
+     FILE *file = fopen("users.txt", "r");
+     //The file users.txt is opened in read (r) mode
+
+     //Check if the File Opened Successfully
+     if (file == NULL) {
+    printf("No registered users found. Please register first.\n");
+    return;
+    }
+
+    //Get the Username and Password from the User
+    printf("Enter username: ");
+    fgets(username, 50, stdin);
+    username[strcspn(username, "\n")] = 0; // Remove newline
+
+    printf("Enter password: ");
+    fgets(password, 50, stdin);
+    password[strcspn(password, "\n")] = 0; // Remove newline
+
+
+   //Search for Matching Credentials
+   int found = 0;
+//A variable found is initialized to 0, which will indicate whether the username and password match.
+   while (fscanf(file, "%s %s", storedUser.username, storedUser.password) != EOF) {
+    if (strcmp(username, storedUser.username) == 0 && strcmp(password, storedUser.password) == 0) {
+        found = 1;
+        break;
+    }
+ }
+
+ //Close the File
+     fclose(file);
+
+
+     //Check If the Credentials Were Found
+     if (found) {
+    printf("Login successful! Welcome, %s\n", username);
+ } else {
+    printf("Invalid username or password. Please try again.\n");
+ }
+
 }
