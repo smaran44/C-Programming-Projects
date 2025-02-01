@@ -80,7 +80,7 @@ void create_account(){
     }
 
     //Get the username from the user
-    printf("\nEnter Username : ");
+    printf("Enter Username : ");
     fgets(acc.name, sizeof(acc.name), stdin);
     //fgets() is used to read a string from the user (up to 50 characters).
     acc.name[strcspn(acc.name, "\n")] = 0; // Remove newline
@@ -195,13 +195,15 @@ void check_balance(){
     return;
     }
 
-    int acc_no;
+    int acc_no, found = 0;
+    float amount;
+    Account acc;
+
     printf("Enter your account number : ");
     scanf("%d", &acc_no);
 
 
      //Search for Matching Credentials
-   int found = 0;
      while (fscanf(file, "%s %d %f", acc.name, &acc.acc_no, &acc.balance) != EOF) {
         if (acc.acc_no == acc_no) {
     /*acc.acc_no refers to the account number stored in the Account structure while reading from the file.
