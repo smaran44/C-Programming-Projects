@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
 #include <conio.h> // For getch() in Windows
 
@@ -114,7 +113,7 @@ void register_user() {
 
     // Get the Password from the User
     printf("Enter password: ");
-    masked_password(newuser.password); // Masked password input
+    masked_password(newuser.password, 49); // Masked password input
 
     //Check if the Username Already Exists
     User existinguser;
@@ -164,7 +163,7 @@ void login_user() {
     username[strcspn(username, "\n")] = 0; // Remove newline
 
     printf("Enter password: ");
-    masked_password(newuser.password); // Masked password input
+    masked_password(password, 49); // Masked password input
 
 
    //Search for Matching Credentials
