@@ -130,6 +130,7 @@ void create_account(){
 
    //Declare a user struct and open a file
     Account acc;
+    char confirm_password[50]; // For password confirmation
     FILE *file = fopen("accounts.txt", "a+");
     //"a+" allows appending new users while also enabling reading of existing users.
 
@@ -165,8 +166,20 @@ void create_account(){
     }
 
 
-    printf("Enter your password: ");
-    masked_password(acc.password, sizeof(acc.password));
+// Loop until the user enters matching passwords
+    while (1) {
+        printf("Enter password: ");
+        masked_password(acc.password, sizeof(acc.password));
+
+        printf("Confirm password: ");
+        masked_password(confirm_password, sizeof(confirm_password));
+
+        if (strcmp(acc.password, confirm_password) == 0) {
+            break; // Passwords match, exit loop
+        } else {
+            printf("Passwords do not match! Please try again.\n");
+        }
+    }
 
 
     acc.balance = 0;
