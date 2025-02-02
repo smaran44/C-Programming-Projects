@@ -112,7 +112,22 @@ void register_user() {
     //strcspn(newUser.username, "\n") finds the index of the newline character (\n) in the string.
     //newuser.username[strcspn(newuser.username, "\n")] = 0; replaces the newline with \0 (null terminator) to remove unwanted newlines.
 
-    // Get the Password from the User
+    
+    //Check if the Username Already Exists
+    User existinguser;
+    rewind(file); 
+    // Move file pointer to the beginning so we can read existing user data
+    
+    //The while loop reads each username and password pair from users.txt
+    while (fscanf(file, "%s %s", existinguser.username, existinguser.password) != EOF) {
+    if (strcmp(existinguser.username, newuser.username) == 0) {
+        printf("Username already exists! Try again.\n");
+        fclose(file);
+        return;
+    }
+ }
+
+   // Get the Password from the User
     // Loop until the user enters matching passwords
     while (1) {
         printf("Enter password: ");
@@ -127,21 +142,6 @@ void register_user() {
             printf("Passwords do not match! Please try again.\n");
         }
     }
-
-
-    //Check if the Username Already Exists
-    User existinguser;
-    rewind(file); 
-    // Move file pointer to the beginning so we can read existing user data
-    
-    //The while loop reads each username and password pair from users.txt
-    while (fscanf(file, "%s %s", existinguser.username, existinguser.password) != EOF) {
-    if (strcmp(existinguser.username, newuser.username) == 0) {
-        printf("Username already exists! Try again.\n");
-        fclose(file);
-        return;
-    }
- }
 
 
    //Store the New User's Credentials in the File
