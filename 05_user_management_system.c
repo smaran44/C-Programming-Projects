@@ -94,6 +94,7 @@ void register_user() {
     
     //Declare a user struct and open a file
     User newuser;
+    char confirm_password[50]; // For password confirmation
     FILE *file = fopen("users.txt", "a+");
     //"a+" allows appending new users while also enabling reading of existing users.
 
@@ -112,8 +113,21 @@ void register_user() {
     //newuser.username[strcspn(newuser.username, "\n")] = 0; replaces the newline with \0 (null terminator) to remove unwanted newlines.
 
     // Get the Password from the User
-    printf("Enter password: ");
-    masked_password(newuser.password, 49); // Masked password input
+    // Loop until the user enters matching passwords
+    while (1) {
+        printf("Enter password: ");
+        masked_password(newuser.password, 49);
+
+        printf("Confirm password: ");
+        masked_password(confirm_password, 49);
+
+        if (strcmp(newuser.password, confirm_password) == 0) {
+            break; // Passwords match, exit loop
+        } else {
+            printf("Passwords do not match! Please try again.\n");
+        }
+    }
+
 
     //Check if the Username Already Exists
     User existinguser;
