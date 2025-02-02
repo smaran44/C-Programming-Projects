@@ -1,15 +1,19 @@
 #include <stdio.h>
 #include <string.h>
+#include <conio.h> // For getch() in Windows
 
 void create_account();
 void deposit_money();
 void withdraw_money();
 void check_balance();
 
+void masked_password(char *password, int max_length);
+
 typedef struct {
     char name[50];
     int acc_no;
     float balance;
+    char password[20];
 }Account;
 
 int main() {
@@ -66,6 +70,62 @@ int main() {
      return 0;
 }
 
+// Function to take password input while masking it with '*'
+void masked_password(char *password, int max_length) {
+    int i = 0;  // Index to track the length of the password
+    char ch;    // Variable to store user input character
+
+    while (1) {
+        ch = getch(); // Get character input without displaying it on the screen
+
+        // If the user presses 'Enter' (ASCII 13), terminate input
+        if (ch == 13) { 
+            password[i] = '\0'; // Null-terminate the password string
+            break; 
+        }
+        // if this is not there when we press enter it will also go into password
+
+        // If the user presses 'Backspace' (ASCII 8), handle deletion
+        else if (ch == 8) { 
+            if (i > 0) {  // Ensure there are characters to delete
+                i--;  
+                printf("\b \b"); // Move cursor back, erase character, move back again
+            }
+        }
+        // if this is not there when we press backspace it will also go into password
+
+        // If the user types a valid character (within max length), store it
+        else if (i < max_length - 1) { 
+            password[i++] = ch;  // Store the character
+            printf("*");  // Print '*' to mask the input
+        }
+    }
+    printf("\n"); // Move to a new line after input completion
+}
+
+int authenticate(int acc_no, char *input_password) {
+    FILE *file = fopen("accounts.txt", "r");
+    if (file == NULL) return 0;
+    Account acc;
+    while (fscanf(file, "%s %d %f %s", acc.name, &acc.acc_no, &acc.balance, acc.password) != EOF) {
+        if (acc.acc_no == acc_no && strcmp(acc.password, input_password) == 0) {
+            fclose(file);
+            return 1;
+        }
+    }
+    fclose(file);
+    return 0;
+}
+/*return 1;
+If the account number and password match, it means authentication was successful.
+The function returns 1 to indicate the user is authorized.
+After finding a match, the function closes the file and exits immediately, skipping further checks.
+
+return 0;
+If no matching record is found, it means authentication failed.
+The function reaches the end of the file without finding a match, so it returns 0, indicating the user is not authorized.*/
+
+
 void create_account(){
 
    //Declare a user struct and open a file
@@ -91,10 +151,28 @@ void create_account(){
     scanf("%d", &acc.acc_no);
     // account number is just an integer so we can use scanf
 
+     //Check if the Username Already Exists
+    Account existing_acc;
+    rewind(file); 
+    // Move file pointer to the beginning so we can read existing user data
+
+     while (fscanf(file, "%s %d %f %s", existing_acc.name, &existing_acc.acc_no, &existing_acc.balance, existing_acc.password) != EOF) {
+        if (existing_acc.acc_no == acc.acc_no) {
+            printf("Account number already exists! Try again.\n");
+            fclose(file);
+            return;
+        }
+    }
+
+
+    printf("Enter your password: ");
+    masked_password(acc.password, sizeof(acc.password));
+
+
     acc.balance = 0;
 
     //Store the Credentials in the File
-    fprintf(file, "%s %d %.2f\n", acc.name, acc.acc_no, acc.balance);
+     fprintf(file, "%s %d %.2f %s\n", acc.name, acc.acc_no, acc.balance, acc.password);
 
 
    //Close the File and Confirm Registration
@@ -120,21 +198,38 @@ Appending adds data, not modifying existing data
     }
     int acc_no, found = 0;
     float amount;
+    char input_password[20];
     Account acc;
 
     FILE *temp = fopen("temp.txt", "w");
     printf("Enter your account number : ");
     scanf("%d", &acc_no);
+    while (getchar() != '\n');
+
+    printf("Enter your password: ");
+    masked_password(input_password, sizeof(input_password));
+
+     if (authenticate(acc_no, input_password) == 0) {
+        printf("Invalid account number or password!\n");
+        fclose(file);
+        fclose(temp);
+        return;
+    }
+ /*return exits the function immediately, preventing further execution.
+  It ensures the function stops running when authentication fails.*/
+
     printf("Enter amount to deposit: ");
     scanf("%f", &amount);
 
-    while (fscanf(file, "%s %d %f", acc.name, &acc.acc_no, &acc.balance) != EOF) {
+     
+    while (fscanf(file, "%s %d %f %s", acc.name, &acc.acc_no, &acc.balance, acc.password) != EOF) {
         if (acc.acc_no == acc_no) {
             acc.balance += amount;
             found = 1;
         }
-        fprintf(temp, "%s %d %.2f\n", acc.name, acc.acc_no, acc.balance);
+        fprintf(temp, "%s %d %.2f %s\n", acc.name, acc.acc_no, acc.balance, acc.password);
     }
+
     fclose(file);
     fclose(temp);
     remove("accounts.txt");
@@ -154,13 +249,26 @@ void withdraw_money(){
     }
     int acc_no, found = 0;
     float amount;
+    char input_password[20];
     Account acc;
     FILE *temp = fopen("temp.txt", "w");
     printf("Enter your account number : ");
     scanf("%d", &acc_no);
+    while (getchar() != '\n');
+
+    printf("Enter your password: ");
+    masked_password(input_password, sizeof(input_password));
+
+     if (authenticate(acc_no, input_password) == 0) {
+        printf("Invalid account number or password!\n");
+        fclose(file);
+        fclose(temp);
+        return;
+    }
+
     printf("Enter amount to withdraw: ");
     scanf("%f", &amount);
-    while (fscanf(file, "%s %d %f", acc.name, &acc.acc_no, &acc.balance) != EOF) {
+    while (fscanf(file, "%s %d %f %s", acc.name, &acc.acc_no, &acc.balance, acc.password) != EOF) {
         if (acc.acc_no == acc_no) {
             if (acc.balance >= amount) {
                 acc.balance -= amount;
@@ -170,7 +278,7 @@ void withdraw_money(){
                 found = -1;
             }
         }
-        fprintf(temp, "%s %d %.2f\n", acc.name, acc.acc_no, acc.balance);
+        fprintf(temp, "%s %d %.2f %s\n", acc.name, acc.acc_no, acc.balance, acc.password);
     }
     fclose(file);
     fclose(temp);
@@ -197,14 +305,24 @@ void check_balance(){
 
     int acc_no, found = 0;
     float amount;
+    char input_password[20];
     Account acc;
 
     printf("Enter your account number : ");
     scanf("%d", &acc_no);
 
+    printf("Enter your password: ");
+    masked_password(input_password, sizeof(input_password));
+
+     if (authenticate(acc_no, input_password) == 0) {
+        printf("Invalid account number or password!\n");
+        fclose(file);
+        return;
+    }
+
 
      //Search for Matching Credentials
-     while (fscanf(file, "%s %d %f", acc.name, &acc.acc_no, &acc.balance) != EOF) {
+     while (fscanf(file, "%s %d %f %s", acc.name, &acc.acc_no, &acc.balance, acc.password) != EOF) {
         if (acc.acc_no == acc_no) {
     /*acc.acc_no refers to the account number stored in the Account structure while reading from the file.
 acc_no is the account number entered by the user when performing a transaction (deposit, withdraw, or checking balance).*/
