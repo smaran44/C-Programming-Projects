@@ -26,13 +26,27 @@ int main() {
 
     // Game loop continues until the puzzle is solved
     while (!is_solved(puzzle)) {
+        
         // Ask user for input
-        printf("\nEnter row (1-9): ");
-        scanf("%d", &row);
-        printf("Enter column (1-9): ");
-        scanf("%d", &column);
-        printf("Enter value (1-9): ");
-        scanf("%d", &value);
+       printf("\nEnter row (1-9): ");
+    while (scanf("%d", &row) != 1 || row < 1 || row > 9) {
+        printf("Invalid input! Please enter a row number between 1 and 9: ");
+        while (getchar() != '\n');  // Clear input buffer
+    }
+
+    // Ask user for input and validate column
+    printf("Enter column (1-9): ");
+    while (scanf("%d", &column) != 1 || column < 1 || column > 9) {
+        printf("Invalid input! Please enter a column number between 1 and 9: ");
+        while (getchar() != '\n');  // Clear input buffer
+    }
+
+    // Ask user for input and validate value
+    printf("Enter value (1-9): ");
+    while (scanf("%d", &value) != 1 || value < 1 || value > 9) {
+        printf("Invalid input! Please enter a value between 1 and 9: ");
+        while (getchar() != '\n');  // Clear input buffer
+    }
 
         // Convert to 0-based indexing
         row -= 1;
