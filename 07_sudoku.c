@@ -16,6 +16,7 @@ int puzzle[9][9] = {
 // Function prototypes
 void print_puzzle(int puzzle[9][9]);
 int valid_move(int puzzle[9][9], int row, int column, int value);
+int is_solved(int puzzle[9][9]);
 
 int main() {
     int row, column, value;
@@ -23,28 +24,33 @@ int main() {
     // Print the initial puzzle
     print_puzzle(puzzle);
 
-    // Ask user for input
-    printf("\nEnter row (1-9): ");
-    scanf("%d", &row);
-    printf("Enter column (1-9): ");
-    scanf("%d", &column);
-    printf("Enter value (1-9): ");
-    scanf("%d", &value);
+    // Game loop continues until the puzzle is solved
+    while (!is_solved(puzzle)) {
+        // Ask user for input
+        printf("\nEnter row (1-9): ");
+        scanf("%d", &row);
+        printf("Enter column (1-9): ");
+        scanf("%d", &column);
+        printf("Enter value (1-9): ");
+        scanf("%d", &value);
 
-    // Convert to 0-based indexing
-   row -= 1;
-   column -= 1;
+        // Convert to 0-based indexing
+        row -= 1;
+        column -= 1;
 
-    // Check if the move is valid
-    if (valid_move(puzzle, row, column, value)) {
-        printf("\nValid move!\n");
-        puzzle[row][column] = value; // Place the value in the puzzle
-    } else {
-        printf("\nInvalid move! Try again.\n");
+        // Check if the move is valid
+        if (valid_move(puzzle, row, column, value)) {
+            printf("\nValid move!\n");
+            puzzle[row][column] = value; // Place the value in the puzzle
+        } else {
+            printf("\nInvalid move! Try again.\n");
+        }
+
+        // Print the updated puzzle
+        print_puzzle(puzzle);
     }
 
-    // Print the updated puzzle
-    print_puzzle(puzzle);
+    printf("\nCongratulations! The Sudoku puzzle is solved!\n");
 
     return 0;
 }
@@ -118,4 +124,17 @@ int valid_move(int puzzle[9][9], int row, int column, int value) {
  Loops through the columns of the 3x3 subgrid, starting from start_col.*/
 
     return 1; // Move is valid
+}
+
+// Function to check if the Sudoku puzzle is solved
+int is_solved(int puzzle[9][9]) {
+    // Check if all cells are filled and no violations exist
+    for (int row = 0; row < 9; row++) {
+        for (int column = 0; column < 9; column++) {
+            if (puzzle[row][column] == 0) {
+                return 0; // Puzzle is not solved if there's an empty cell
+            }
+        }
+    }
+    return 1; // Puzzle is solved
 }
