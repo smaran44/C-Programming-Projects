@@ -24,12 +24,16 @@ int main() {
     print_puzzle(puzzle);
 
     // Ask user for input
-    printf("\nEnter row (0-8): ");
+    printf("\nEnter row (1-9): ");
     scanf("%d", &row);
-    printf("Enter column (0-8): ");
+    printf("Enter column (1-9): ");
     scanf("%d", &column);
     printf("Enter value (1-9): ");
     scanf("%d", &value);
+
+    // Convert to 0-based indexing
+   row -= 1;
+   column -= 1;
 
     // Check if the move is valid
     if (valid_move(puzzle, row, column, value)) {
@@ -77,6 +81,7 @@ int valid_move(int puzzle[9][9], int row, int column, int value) {
     for (int i = 0; i < 9; i++) {
         if (puzzle[row][i] == value) {
             return 0;
+//This loop goes through all the cells in the same row (row) and checks if the value the user wants to place (value) already exists in that row.
         }
     }
 
@@ -84,12 +89,17 @@ int valid_move(int puzzle[9][9], int row, int column, int value) {
     for (int i = 0; i < 9; i++) {
         if (puzzle[i][column] == value) {
             return 0;
+// This loop checks if the value exists in the same column (column). It goes through all rows (i) of the given column to see if the value is already there.
         }
     }
 
     // Find the starting index of the 3x3 subgrid
     int start_row = row - row % 3;
+    /*If row = 4, row % 3 = 1, so subtracting this from row gives start_row = 4 - 1 = 3. The subgrid starts from row 3 (index 3, which is the first row of the subgrid).
+      If row = 7, row % 3 = 1, so start_row = 7 - 1 = 6. The subgrid starts from row 6 (index 6).*/
     int start_col = column - column % 3;
+    /*If column = 5, column % 3 = 2, so subtracting this from column gives start_col = 5 - 2 = 3. The subgrid starts from column 3 (index 3, which is the first column of the subgrid).
+      If column = 8, column % 3 = 2, so start_col = 8 - 2 = 6. The subgrid starts from column 6 (index 6).*/
 
     // Check if the value exists in the 3x3 subgrid
     for (int i = 0; i < 3; i++) {
@@ -99,6 +109,13 @@ int valid_move(int puzzle[9][9], int row, int column, int value) {
             }
         }
     }
+    /*hese two nested loops (i and j) iterate over the 3x3 subgrid to check if the value already exists within that subgrid.
+
+ Outer loop (i):
+ Loops through the rows of the 3x3 subgrid, starting from start_row (which is the top-left corner of the subgrid).
+
+ Inner loop (j):
+ Loops through the columns of the 3x3 subgrid, starting from start_col.*/
 
     return 1; // Move is valid
 }
