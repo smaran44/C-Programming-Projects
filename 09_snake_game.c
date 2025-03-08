@@ -28,6 +28,8 @@ HANDLE console;  // Handle to console for cursor positioning
 COORD cursor_position; // Stores the cursor position
 // The COORD structure defines the coordinates of a character cell in a console screen buffer.
 
+int speed = 100; // Initial speed in milliseconds (100 ms = 0.1 seconds)
+
 // Function Declarations
 void setup();
 void draw();
@@ -49,7 +51,7 @@ int main() {
         draw();   // Render the game
         input();  // Handle user input
         game_play(); // Update game logic
-        sleep_ms(100); // Control game speed (100 ms delay)
+        sleep_ms(speed); // Control game speed (100 ms delay)
     }
 }
 
@@ -65,6 +67,7 @@ void setup() {
     //The snake remains stationary until the player presses a key (w, a, s, d).
     score = 0;
     tail_length = 0; // Start with no tail
+    speed = 100; // Reset speed when game starts
 }
 
 // Function to render the game
@@ -220,6 +223,8 @@ void game_play() {
         tail_length++;  // Increase tail length
         fruit_x = rand() % WIDTH;  // Generate new fruit position (random x)
         fruit_y = rand() % HEIGHT; // Generate new fruit position (random y)
+        if (speed > 30) speed -= 3; // Increase speed after eating fruit
+        //The speed variable represents the delay in milliseconds, so decreasing it makes the game run faster.
     }
 }
 
