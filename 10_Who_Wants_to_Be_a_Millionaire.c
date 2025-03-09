@@ -94,10 +94,20 @@ void play_game(Question* questions, int no_of_questions) {
 
 DWORD WINAPI timeout_thread(LPVOID lpParam) {
     int timeout = *(int*)lpParam;
-    Sleep(timeout * 1000);
+    printf("\n");  // Move the countdown to a separate line
+
+    for (int i = timeout; i > 0; i--) {
+        printf("\rTime Remaining: %d seconds   ", i); // Overwrites previous time
+        fflush(stdout);  // Ensures immediate printing
+        Sleep(1000);
+    }
+
     timeout_happened = 1;
+    printf("\n\nTime is up!\n");
     return 0;
 }
+
+
 
 int use_lifeline(Question* question, int* lifeline) {
     set_console_color(13); // Pink
@@ -144,18 +154,19 @@ int use_lifeline(Question* question, int* lifeline) {
 void print_formatted_question(Question question) {
     set_console_color(14); // Yellow
     printf("\n\n%s\n", question.text);
+
     set_console_color(11); // Aqua
     for (int i = 0; i < 4; i++) {
         if (question.options[i][0] != '\0') {
             printf("%c. %s\n", ('A' + i), question.options[i]);
         }
     }
-    set_console_color(14); // Yellow
-    printf("\nHurry!! You have only %d Seconds to answer..\n", question.timeout);
+
     set_console_color(10); // Green
-    printf("Enter your answer (A, B, C, or D) or L for lifeline: ");
+    printf("\nEnter your answer (A, B, C, or D) or L for lifeline:\n");  // Ensure input is below timer
     set_console_color(7);
 }
+
 
 int read_questions(char* file_name, Question** questions) {
     FILE *file = fopen(file_name, "r");
