@@ -53,22 +53,33 @@ void play_game(Question* questions, int no_of_questions) {
         HANDLE hThread = CreateThread(NULL, 0, timeout_thread, &questions[i].timeout, 0, NULL);
 
         printf("\nYour answer: "); 
-        fflush(stdout); // Ensure output is properly flushed
+        fflush(stdout);  // Ensure the prompt appears before input
 
-        char ch = _getch();  // Waits for user input
+        char ch;
+        while (!_kbhit()) {  // Wait for input, but allow timeout to happen
+            if (timeout_happened) {
+                printf("\rTime out!\n");
+                set_console_color(12); // Red
+                set_console_color(7);  // Reset color
+                TerminateThread(hThread, 0);
+                CloseHandle(hThread);
+                return;  // End the game instantly
+            }
+        }
+
+        ch = _getch();  // Get user input if they pressed a key
         TerminateThread(hThread, 0);
         CloseHandle(hThread);
 
-        printf("\rYour answer: %c\n", ch);  // Correctly overwrites the line
-
-        ch = toupper(ch);
-
         if (timeout_happened) {
+            printf("\rTime out!!!!! Press Any Key...\n");
             set_console_color(12); // Red
-            printf("\nTime out!!!!! Press Any Key...\n");
-            set_console_color(7);
-            break;
+            set_console_color(7);  // Reset color
+            return;
         }
+
+        printf("\rYour answer: %c\n", ch);  // Ensure correct input placement
+        ch = toupper(ch);
 
         if (ch == 'L') {
             int value = use_lifeline(&questions[i], lifeline);
@@ -100,7 +111,7 @@ void play_game(Question* questions, int no_of_questions) {
 
 DWORD WINAPI timeout_thread(LPVOID lpParam) {
     int timeout = *(int*)lpParam;
-    
+
     for (int i = timeout; i > 0; i--) {
         Sleep(1000);
         if (timeout_happened) return 0;
@@ -109,7 +120,7 @@ DWORD WINAPI timeout_thread(LPVOID lpParam) {
         fflush(stdout);
     }
 
-    timeout_happened = 1;
+    timeout_happened = 1;  // Mark timeout occurred
     return 0;
 }
 
