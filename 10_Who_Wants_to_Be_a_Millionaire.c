@@ -44,7 +44,7 @@ int main() {
 
 void play_game(Question* questions, int no_of_questions) {
     int money_won = 0;
-    int lifeline[] = {1, 1};
+    int lifeline[] = {1, 1}; // 50-50 and Skip Question
 
     for (int i = 0; i < no_of_questions; i++) {
         print_formatted_question(questions[i]);
@@ -52,57 +52,70 @@ void play_game(Question* questions, int no_of_questions) {
         timeout_happened = 0;
         HANDLE hThread = CreateThread(NULL, 0, timeout_thread, &questions[i].timeout, 0, NULL);
 
-        printf("\nYour answer: "); 
-        fflush(stdout);  // Ensure the prompt appears before input
+        printf("\nYour answer: ");
+        fflush(stdout);
 
-        char ch;
-        while (!_kbhit()) {  // Wait for input, but allow timeout to happen
+        char ch = '\0';
+        while (!_kbhit()) {
             if (timeout_happened) {
-                printf("\rTime out!\n");
-                set_console_color(12); // Red
-                set_console_color(7);  // Reset color
                 TerminateThread(hThread, 0);
                 CloseHandle(hThread);
-                return;  // End the game instantly
+
+                set_console_color(12);
+                printf("\n\nTime Out!!!!!\n");
+                set_console_color(7);
+
+                // ✅ Always show total winnings after timeout
+                set_console_color(9);
+                printf("\n\nGame Over! Your total winnings are: Rs %d\n", money_won);
+                set_console_color(7);
+
+                return;
             }
         }
 
-        ch = _getch();  // Get user input if they pressed a key
+        ch = _getch();
         TerminateThread(hThread, 0);
         CloseHandle(hThread);
 
-        if (timeout_happened) {
-            printf("\rTime out!!!!! Press Any Key...\n");
-            set_console_color(12); // Red
-            set_console_color(7);  // Reset color
+        if (timeout_happened) {  
+            // ✅ Show score if timeout happens right after keypress
+            set_console_color(9);
+            printf("\n\nGame Over! Your total winnings are: Rs %d\n", money_won);
+            set_console_color(7);
             return;
         }
 
-        printf("\rYour answer: %c\n", ch);  // Ensure correct input placement
+        printf("%c\n", ch);
         ch = toupper(ch);
 
         if (ch == 'L') {
             int value = use_lifeline(&questions[i], lifeline);
+
             if (value != 2) {
-                i--;  // Repeat the question if a lifeline is used
+                timeout_happened = 0; // ✅ Reset timeout
+                hThread = CreateThread(NULL, 0, timeout_thread, &questions[i].timeout, 0, NULL);
+                i--; // ✅ Re-ask the question with lifeline applied
             }
             continue;
         }
 
         if (ch == questions[i].correct_option) {
-            set_console_color(10); // Green
+            set_console_color(10);
             printf("\nCorrect!\n");
             money_won = questions[i].prize_money;
-            set_console_color(9); // Blue
+            set_console_color(9);
             printf("\nYou have won: Rs %d\n", money_won);
         } else {
-            set_console_color(12); // Red
+            set_console_color(12);
             printf("\nWrong! Correct answer is %c.\n", questions[i].correct_option);
             break;
         }
         set_console_color(7);
     }
-    set_console_color(9); // Blue
+
+    // ✅ Show winnings at the end of the game
+    set_console_color(9);
     printf("\n\nGame Over! Your total winnings are: Rs %d\n", money_won);
     set_console_color(7);
 }
@@ -113,33 +126,35 @@ DWORD WINAPI timeout_thread(LPVOID lpParam) {
     int timeout = *(int*)lpParam;
 
     for (int i = timeout; i > 0; i--) {
-        Sleep(1000);
-        if (timeout_happened) return 0;
-
-        printf("\rTime Remaining: %d seconds   ", i); // Overwrite the line
+        printf("\rTime Remaining: %d seconds  ", i);  // Overwrite the same line
         fflush(stdout);
+        Sleep(1000);
+
+        if (timeout_happened) {  // Stop countdown if answer is given
+            return 0;
+        }
     }
 
-    timeout_happened = 1;  // Mark timeout occurred
+    timeout_happened = 1;
+    printf("\rTime Out!!!!!                    \n");  // ✅ Overwrites remaining time
     return 0;
 }
 
 
 
-
 int use_lifeline(Question* question, int* lifeline) {
-    set_console_color(13); // Pink
+    set_console_color(13);
     printf("\n\nAvailable Lifelines:\n");
     if (lifeline[0]) printf("1. Fifty-Fifty (50/50)\n");
     if (lifeline[1]) printf("2. Skip the Question\n");
     printf("Choose a lifeline or 0 to return: ");
     set_console_color(7);
-    
+
     char ch = _getch();
     printf("%c\n", ch);
 
     switch (ch) {
-    case '1':
+    case '1': // 50-50 Lifeline
         if (lifeline[0]) {
             lifeline[0] = 0;
             int removed = 0;
@@ -151,13 +166,13 @@ int use_lifeline(Question* question, int* lifeline) {
                     removed++;
                 }
             }
-            return 1;
+            return 1; // ✅ Indicate question should be re-asked
         }
         break;
-    case '2':
+    case '2': // Skip Question Lifeline
         if (lifeline[1]) {
             lifeline[1] = 0;
-            return 2;
+            return 2; // ✅ Move to the next question
         }
         break;
     default:
@@ -168,6 +183,7 @@ int use_lifeline(Question* question, int* lifeline) {
     }
     return 0;
 }
+
 
 void print_formatted_question(Question question) {
     set_console_color(14); // Yellow
