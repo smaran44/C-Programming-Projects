@@ -47,6 +47,7 @@ void play_game(Question* questions, int no_of_questions) {
     int lifeline[] = {1, 1}; // 50-50 and Skip Question
 
     for (int i = 0; i < no_of_questions; i++) {
+        clear_screen();  // ✅ Clears screen before each question
         print_formatted_question(questions[i]);
 
         timeout_happened = 0;
@@ -65,11 +66,9 @@ void play_game(Question* questions, int no_of_questions) {
                 printf("\n\nTime Out!!!!!\n");
                 set_console_color(7);
 
-                // ✅ Always show total winnings after timeout
                 set_console_color(9);
                 printf("\n\nGame Over! Your total winnings are: Rs %d\n", money_won);
                 set_console_color(7);
-
                 return;
             }
         }
@@ -78,8 +77,7 @@ void play_game(Question* questions, int no_of_questions) {
         TerminateThread(hThread, 0);
         CloseHandle(hThread);
 
-        if (timeout_happened) {  
-            // ✅ Show score if timeout happens right after keypress
+        if (timeout_happened) {
             set_console_color(9);
             printf("\n\nGame Over! Your total winnings are: Rs %d\n", money_won);
             set_console_color(7);
@@ -93,9 +91,9 @@ void play_game(Question* questions, int no_of_questions) {
             int value = use_lifeline(&questions[i], lifeline);
 
             if (value != 2) {
-                timeout_happened = 0; // ✅ Reset timeout
+                timeout_happened = 0;
                 hThread = CreateThread(NULL, 0, timeout_thread, &questions[i].timeout, 0, NULL);
-                i--; // ✅ Re-ask the question with lifeline applied
+                i--;
             }
             continue;
         }
@@ -114,7 +112,6 @@ void play_game(Question* questions, int no_of_questions) {
         set_console_color(7);
     }
 
-    // ✅ Show winnings at the end of the game
     set_console_color(9);
     printf("\n\nGame Over! Your total winnings are: Rs %d\n", money_won);
     set_console_color(7);
@@ -166,13 +163,14 @@ int use_lifeline(Question* question, int* lifeline) {
                     removed++;
                 }
             }
-            return 1; // ✅ Indicate question should be re-asked
+            clear_screen();  // ✅ Clears screen before re-asking the question
+            return 1;
         }
         break;
     case '2': // Skip Question Lifeline
         if (lifeline[1]) {
             lifeline[1] = 0;
-            return 2; // ✅ Move to the next question
+            return 2;  // ✅ Moves to the next question without clearing
         }
         break;
     default:
@@ -183,6 +181,7 @@ int use_lifeline(Question* question, int* lifeline) {
     }
     return 0;
 }
+
 
 
 void print_formatted_question(Question question) {
@@ -244,4 +243,8 @@ int read_questions(char* file_name, Question** questions) {
 
 void set_console_color(int color) {
     SetConsoleTextAttribute(hConsole, color);
+}
+
+void clear_screen() {
+    system("cls");  // ✅ Clears the console screen on Windows
 }
