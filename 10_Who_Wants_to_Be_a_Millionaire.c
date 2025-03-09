@@ -45,21 +45,25 @@ int main() {
 void play_game(Question* questions, int no_of_questions) {
     int money_won = 0;
     int lifeline[] = {1, 1};
-    
+
     for (int i = 0; i < no_of_questions; i++) {
         print_formatted_question(questions[i]);
-        
+
         timeout_happened = 0;
         HANDLE hThread = CreateThread(NULL, 0, timeout_thread, &questions[i].timeout, 0, NULL);
-        
-        char ch = _getch();
+
+        printf("\nYour answer: "); 
+        fflush(stdout); // Ensure output is properly flushed
+
+        char ch = _getch();  // Waits for user input
         TerminateThread(hThread, 0);
         CloseHandle(hThread);
-        
-        printf("%c\n", ch);
+
+        printf("\rYour answer: %c\n", ch);  // Correctly overwrites the line
+
         ch = toupper(ch);
-        
-        if (timeout_happened == 1) {
+
+        if (timeout_happened) {
             set_console_color(12); // Red
             printf("\nTime out!!!!! Press Any Key...\n");
             set_console_color(7);
@@ -69,7 +73,7 @@ void play_game(Question* questions, int no_of_questions) {
         if (ch == 'L') {
             int value = use_lifeline(&questions[i], lifeline);
             if (value != 2) {
-                i--;
+                i--;  // Repeat the question if a lifeline is used
             }
             continue;
         }
@@ -92,20 +96,23 @@ void play_game(Question* questions, int no_of_questions) {
     set_console_color(7);
 }
 
+
+
 DWORD WINAPI timeout_thread(LPVOID lpParam) {
     int timeout = *(int*)lpParam;
-    printf("\n");  // Move the countdown to a separate line
-
+    
     for (int i = timeout; i > 0; i--) {
-        printf("\rTime Remaining: %d seconds   ", i); // Overwrites previous time
-        fflush(stdout);  // Ensures immediate printing
         Sleep(1000);
+        if (timeout_happened) return 0;
+
+        printf("\rTime Remaining: %d seconds   ", i); // Overwrite the line
+        fflush(stdout);
     }
 
     timeout_happened = 1;
-    printf("\n\nTime is up!\n");
     return 0;
 }
+
 
 
 
