@@ -1,4 +1,4 @@
-What is the output of printf("%d", 5+3);?
+Q01 :- What is the output of printf("%d", 5+3);?
 7
 8
 5
@@ -6,7 +6,7 @@ What is the output of printf("%d", 5+3);?
 B
 30
 1000
-Which data type is used to store a single character in C?
+Q02 :- Which data type is used to store a single character in C?
 char
 int
 float
@@ -14,7 +14,7 @@ double
 A
 30
 2000
-Which loop executes at least once even if the condition is false?
+Q03 :- Which loop executes at least once even if the condition is false?
 for
 do-while
 while
@@ -22,7 +22,7 @@ none
 B
 30
 3000
-Which header file is required for memory allocation functions like malloc?
+Q04 :- Which header file is required for memory allocation functions like malloc?
 stdio.h
 stdlib.h
 math.h
@@ -30,7 +30,7 @@ conio.h
 B
 30
 5000
-What is the time complexity of quicksort in the best case?
+Q05 :- What is the time complexity of quicksort in the best case?
 O(n^2)
 O(n log n)
 O(n)
@@ -38,7 +38,7 @@ O(log n)
 B
 30
 10000
-What does the 'static' keyword signify in C?
+Q06 :- What does the 'static' keyword signify in C?
 Global variable
 Local variable with persistent value
 Compile-time constant
@@ -46,7 +46,7 @@ None
 B
 45
 20000
-Which sorting algorithm has the worst case time complexity of O(n^2)?
+Q07 :- Which sorting algorithm has the worst case time complexity of O(n^2)?
 Merge Sort
 Heap Sort
 Quick Sort
@@ -54,7 +54,7 @@ Bubble Sort
 D
 45
 40000
-Which concept allows function overloading in C?
+Q08 :- Which concept allows function overloading in C?
 Polymorphism
 Encapsulation
 Function Pointers
@@ -62,7 +62,7 @@ None
 C
 45
 80000
-Which C function is used to deallocate memory?
+Q09 :- Which C function is used to deallocate memory?
 malloc
 calloc
 free
@@ -70,7 +70,7 @@ realloc
 C
 45
 160000
-What is the maximum number of recursive calls allowed in C?
+Q10 :- What is the maximum number of recursive calls allowed in C?
 Depends on memory
 1000
 10^5
@@ -78,7 +78,7 @@ Infinite
 A
 45
 320000
-Which of these is not a valid C storage class?
+Q11 :- Which of these is not a valid C storage class?
 auto
 register
 default
@@ -86,7 +86,7 @@ static
 C
 60
 640000
-Which operator has the highest precedence in C?
+Q12 :- Which operator has the highest precedence in C?
 &&
 ||
 ==
@@ -94,7 +94,7 @@ Which operator has the highest precedence in C?
 D
 60
 1250000
-Which C standard introduced the 'bool' data type?
+Q13 :- Which C standard introduced the 'bool' data type?
 C89
 C99
 C11
@@ -102,7 +102,7 @@ C17
 B
 60
 2500000
-What is the purpose of volatile keyword in C?
+Q14 :- What is the purpose of volatile keyword in C?
 Ignore optimizations
 Make variable constant
 Prevent overwriting
@@ -110,7 +110,7 @@ None
 A
 60
 5000000
-Which memory segment does dynamically allocated memory reside in?
+Q15 :- Which memory segment does dynamically allocated memory reside in?
 Stack
 Heap
 Code
