@@ -1,16 +1,16 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <ctype.h>
-#include <windows.h>
-#include <conio.h>
-#include <time.h>
+#include <stdio.h>//For standard input/output functions.
+#include <stdlib.h>//For exit() function.
+#include <string.h>//For string functions.
+#include <ctype.h>//For character handling functions.
+#include <windows.h>//For Windows API functions.
+#include <conio.h>//For _getch() function.
+#include <time.h>//For time functions.
 
 #define MAX_QUES_LEN 300
 #define MAX_OPTION_LEN 100
 
-volatile int timeout_happened = 0;
-HANDLE hConsole;
+volatile int timeout_happened = 0;//Flag to check if timeout happened.
+HANDLE hConsole;//Handle to the console window.
 
 typedef struct {
     char text[MAX_QUES_LEN];
