@@ -26,6 +26,7 @@ void play_game(Question* questions, int no_of_questions);
 int use_lifeline(Question* question, int* lifeline);
 DWORD WINAPI timeout_thread(LPVOID lpParam);
 void set_console_color(int color);
+void clear_screen();
 
 int main() {
     srand(time(NULL));
