@@ -1,38 +1,35 @@
+# C Programming Projects 🚀
 
-# 🚀 C Programming Projects
+Welcome to the **C Programming Projects** repository! This repository contains a collection of hands-on C projects designed to enhance your coding skills and help you build real-world applications. Whether you're a **beginner** or an **advanced programmer**, these projects will help you strengthen your understanding of C programming. 💡
 
-Welcome to my **C Programming Projects Repository!** 🎯  
-This repository contains **10 exciting projects** that showcase my skills in **game development, system utilities, file handling, and algorithmic problem-solving using C.**  
+## 📌 Repository Structure
+This repository is organized into multiple folders, each containing a unique C programming project:
 
-## 📂 **Projects Overview**
-Each project is designed to enhance understanding of **core C concepts** like loops, functions, pointers, file handling, and more.  
-
-### 🔥 **Projects Included:**
-1. 🎮 **[Number Guessing Game]** – A fun interactive game using random number generation.
-2. 🖩 **[Simple Calculator]** – A basic calculator handling arithmetic operations and error validation.
-3. ⏰ **[Real-Time Digital Clock]** – Displays time dynamically in **12-hour & 24-hour formats.**
-4. 📊 **[Dynamic Progress Bar]** – A visually appealing **progress bar with real-time updates.**
-5. 🔒 **[User Management System]** – Features **user registration, login & password masking.**
-6. 🏦 **[Bank Management System]** – A **file-based banking system** with secure authentication.
-7. 🧩 **[Sudoku Solver & Interactive Sudoku]** – Solve Sudoku automatically or play interactively.
-8. ❌⭕ **[Tic-Tac-Toe Game]** – Play against **AI or a friend with score tracking & difficulty modes.**
-9. 🐍 **[Snake Game]** – Classic **snake game** with **wrap-around & classic modes.**
-10. 💰 **[Who Wants to Be a Millionaire?]** – Console-based **quiz game with lifelines & timers!**
+🎯 **Number Guessing Game** – A simple game where the player guesses a randomly generated number with real-time feedback.
+🔄 **Tic-Tac-Toe** – A two-player game implemented using arrays and logical conditions.
+🔐 **User Management System** – A file-based system for user registration, login, and authentication.
+📊 **Dynamic Progress Bar** – A terminal-based progress bar that updates dynamically.
+📂 **File Encryption & Decryption** – A program that encrypts and decrypts text files using a basic algorithm.
+🧩 **Sudoku Solver & Game** – An interactive Sudoku game and an automated solver.
+🔠 **Text-Based Calculator** – A CLI-based calculator that performs arithmetic operations.
+💾 **Bank Management System** – A mini project to simulate banking operations like deposits, withdrawals, and balance checks.
+📋 **To-Do List Application** – A simple command-line task manager.
+📈 **Data Visualization using C** – A graphical representation of data using ASCII or simple graphics.
 
 ## 🚀 Getting Started
-To get started with the challenges:
+To get started with these projects:
 1. Clone this repository:
    ```sh
-   git clone https://github.com/smaran44/C-Programming-Challenges.git
+   git clone https://github.com/smaran44/C-Programming-Projects.git
    ```
-2. Navigate to the desired challenge folder:
+2. Navigate to the desired project folder:
    ```sh
-   cd C-Programming-Challenges/<Folder_Name>
+   cd C-Programming-Projects/<Project_Name>
    ```
-3. Compile and run the programs using GCC:
+3. Compile and run the project using GCC:
    ```sh
-   gcc program.c -o program
-   ./program
+   gcc project.c -o project
+   ./project
    ```
 
 ## 🎯 How to Contribute
@@ -40,16 +37,16 @@ Want to contribute? Follow these steps:
 1. **Fork** the repository.
 2. Create a **new branch** for your contribution:
    ```sh
-   git checkout -b feature-new-challenge
+   git checkout -b feature-new-project
    ```
-3. Add your challenge and **commit your changes**:
+3. Add your project and **commit your changes**:
    ```sh
    git add .
-   git commit -m "Added new challenge in <Folder_Name>"
+   git commit -m "Added new project: <Project_Name>"
    ```
 4. Push the changes to your fork:
    ```sh
-   git push origin feature-new-challenge
+   git push origin feature-new-project
    ```
 5. Open a **Pull Request** for review. 🎉
 
