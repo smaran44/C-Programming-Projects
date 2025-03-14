@@ -19,37 +19,47 @@ Each project is designed to enhance understanding of **core C concepts** like lo
 9. 🐍 **[Snake Game]** – Classic **snake game** with **wrap-around & classic modes.**
 10. 💰 **[Who Wants to Be a Millionaire?]** – Console-based **quiz game with lifelines & timers!**
 
-## 🛠 **Getting Started**
-### 🔹 **Prerequisites**
-- A **C compiler** (e.g., GCC, MinGW, or Turbo C++)
-- A **terminal or command prompt** to run the programs
-
-### 🔹 **How to Compile & Run**
-1. Clone the repository:
+## 🚀 Getting Started
+To get started with the challenges:
+1. Clone this repository:
    ```sh
-   git clone https://github.com/smaran44/C-Programming-Projects.git
-   cd C-Programming-Projects
+   git clone https://github.com/smaran44/C-Programming-Challenges.git
+   ```
+2. Navigate to the desired challenge folder:
+   ```sh
+   cd C-Programming-Challenges/<Folder_Name>
+   ```
+3. Compile and run the programs using GCC:
+   ```sh
+   gcc program.c -o program
+   ./program
+   ```
 
-2. Navigate to a project directory:
-   cd Number_Guessing_Game
+## 🎯 How to Contribute
+Want to contribute? Follow these steps:
+1. **Fork** the repository.
+2. Create a **new branch** for your contribution:
+   ```sh
+   git checkout -b feature-new-challenge
+   ```
+3. Add your challenge and **commit your changes**:
+   ```sh
+   git add .
+   git commit -m "Added new challenge in <Folder_Name>"
+   ```
+4. Push the changes to your fork:
+   ```sh
+   git push origin feature-new-challenge
+   ```
+5. Open a **Pull Request** for review. 🎉
 
-3. Compile the program using GCC:
-   gcc guessing_game.c -o game.exe
+## ⭐ Show Your Support
+If you find this repository helpful, please **⭐ star** the repository and share it with others who are learning C programming!
 
-4. Run the executable:
-   ./game.exe
-
-📜 Why I Built These Projects
-To deepen my understanding of C programming.
-To improve problem-solving & algorithmic thinking.
-To explore file handling, AI logic, and real-time input processing.
-To develop fun and practical applications using C.
-💡 Future Enhancements
-Add more games and applications.
-Optimize code efficiency & memory management.
-Explore GUI-based applications in C.
-📌 Contributing
-Contributions, feedback, and suggestions are welcome! Feel free to fork this repository and make improvements.
+## 📩 Contact
+Have any questions or suggestions? Feel free to **open an issue** or reach out!
 
 📬 Connect With Me
 🔗 LinkedIn: www.linkedin.com/in/smaran-yanapu
+
+Happy Coding! 🚀💻
